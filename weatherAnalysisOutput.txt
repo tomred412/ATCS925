@@ -1,0 +1,6 @@
+Average temp = 44.6
+4 days were above average.
+
+Temperatures: [45, 44, 39, 48, 37, 46, 53]
+Two coldest days: 37, 39
+Two hottest days: 53, 48
