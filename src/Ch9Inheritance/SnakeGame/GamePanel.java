@@ -12,7 +12,7 @@ public class GamePanel extends JPanel implements ActionListener, Restartable {
 
     public static final int SNAKE_SIZE = 25; //Snake's head is going to be a 25-pixel square
     public static final int GAME_UNITS = (SCREEN_HEIGHT * SCREEN_WIDTH) / (SNAKE_SIZE * SNAKE_SIZE);
-    public static final int DELAY = 150; //delay to render the graphics (use to control the speed)
+    public static final int DELAY = 75; //delay to render the graphics (use to control the speed)
 
 
     //V2
