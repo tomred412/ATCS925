@@ -39,7 +39,7 @@ public class TicTacToe {
      *
      * @param in The Scanner used to read from user input.
      */
-    public static void initalizeBoard(Scanner in) {
+    private static void initalizeBoard(Scanner in) {
         BOARD_SIZE = getBoardSize(in);
         board = new char[BOARD_SIZE][BOARD_SIZE];
 
@@ -59,7 +59,7 @@ public class TicTacToe {
      * @param in The Scanner used to get user input.
      * @return The integer size of the board.
      */
-    public static int getBoardSize(Scanner in) {
+    private static int getBoardSize(Scanner in) {
         System.out.print("Please enter the desired board size: ");
         return in.nextInt();
     }
@@ -70,15 +70,15 @@ public class TicTacToe {
      * @param in The Scanner used to get user input.
      * @return The boolean flag representing if AI mode is enabled.
      */
-    public static boolean isAIModeDesired(Scanner in) {
-        System.out.print("Would you like you play against the computer? The computer will be Player O (y/n): ");
+    private static boolean isAIModeDesired(Scanner in) {
+        System.out.print("Would you like to play against the computer? The computer will be Player O (y/n): ");
         return in.next().equalsIgnoreCase("y");
     }
 
     /**
      * This prints the current board state with tab characters for formatting.
      */
-    public static void printBoard() {
+    private static void printBoard() {
         for (int i = 0; i < board.length; ++i) {
             for (int j = 0; j < board[0].length; ++j) {
                 System.out.print(board[i][j] + "\t");
@@ -94,7 +94,7 @@ public class TicTacToe {
      * @param column The column index to check.
      * @return The boolean flag representing if the move is valid.
      */
-    public static boolean isValidMove(int row, int column) {
+    private static boolean isValidMove(int row, int column) {
         if (row >= board.length || row < 0 || column >= board[0].length || column < 0) {
             return false;
         }
@@ -109,7 +109,7 @@ public class TicTacToe {
      * @param in             The Scanner used to get user input.
      * @return An array containing the row and column of the move made.
      */
-    public static int[] makeMove(char current_player, Scanner in) {
+    private static int[] makeMove(char current_player, Scanner in) {
         System.out.print("Player " + current_player + ", please enter your move in one-based {row} {column} format: ");
 
         int row = in.nextInt() - 1;
@@ -137,7 +137,7 @@ public class TicTacToe {
      * @param player    The player's character (always 'X' in this version).
      * @return An array containing the computer's move.
      */
-    public static int[] makeGreedyAIMove(char ai_player, char player) {
+    private static int[] makeGreedyAIMove(char ai_player, char player) {
         //move to win
         for (int i = 0; i < board.length; ++i) {
             for (int j = 0; j < board[0].length; ++j) {
@@ -197,8 +197,11 @@ public class TicTacToe {
      * @param current_player The player who made the move.
      * @return The boolean flag representing whether the player has won.
      */
-    public static boolean hasWon(int current_row, int current_column, char current_player) {
-        boolean row_win = true, column_win = true, diagonal_win = true, reverse_diagonal_win = true;
+    private static boolean hasWon(int current_row, int current_column, char current_player) {
+        boolean row_win = true, column_win = true;
+        boolean diagonal_win = current_row == current_column;
+        boolean reverse_diagonal_win = current_row + current_column == board.length - 1;
+
         for (int i = 0; i < board.length; ++i) {
             if (row_win) {
                 if (board[current_row][i] != current_player) row_win = false;
@@ -222,7 +225,7 @@ public class TicTacToe {
      *
      * @param last_move The coordinates of the last, most recent move.
      */
-    public static void checkGameOver(int[] last_move) {
+    private static void checkGameOver(int[] last_move) {
         if (hasWon(last_move[0], last_move[1], current_player)) {
             System.out.println("Player " + current_player + " has won! Here is the final board:");
             printBoard();
@@ -242,7 +245,7 @@ public class TicTacToe {
      * @param in The Scanner to get user input.
      * @return An array containing the turn taken.
      */
-    public static int[] playTurn(Scanner in) {
+    private static int[] playTurn(Scanner in) {
         if (one_player_mode && current_player == 'O') {
             int[] last_move = makeGreedyAIMove('O', 'X');
             System.out.println("The computer played " + (last_move[0] + 1) + " and " + (last_move[1] + 1) + ".");
@@ -274,5 +277,7 @@ public class TicTacToe {
                 current_player = (current_player == 'X') ? 'O' : 'X';
             }
         }
+
+        in.close();
     }
 }
